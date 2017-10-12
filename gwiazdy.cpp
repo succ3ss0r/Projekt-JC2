@@ -23,7 +23,7 @@ private:
     sf::RectangleShape shape;
     const float spaceShipWidth{ 30.0f };
     const float spaceShipHeight{ 50.0f };
-    const float spaceShipVelocity{ 20.0f };
+    const float spaceShipVelocity{ 15.0f };
     sf::Vector2f velocity { spaceShipVelocity, 0.f };
 };
 class Star : public sf::Drawable
@@ -68,7 +68,7 @@ SpaceShip::SpaceShip(float t_X, float t_Y)
 {
     shape.setPosition(t_X, t_Y);
     shape.setSize(sf::Vector2f{this->spaceShipWidth, this->spaceShipHeight});
-    shape.setFillColor(sf::Color::Green);
+    shape.setFillColor(sf::Color::Red);
     shape.setOrigin(spaceShipWidth/2.f, spaceShipHeight/2.f);
 }
 void SpaceShip::draw(sf::RenderTarget& target, sf::RenderStates state) const
@@ -128,7 +128,7 @@ int main()
     while(true)
     {
         window.pollEvent(event);
-        window.clear(sf::Color::Blue);
+        window.clear(sf::Color::Black);
 
         if(event.type == sf::Event::Closed){
             window.close();
