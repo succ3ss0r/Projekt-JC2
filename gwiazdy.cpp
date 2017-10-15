@@ -28,25 +28,25 @@ private:
 class Star : public sf::Drawable
 {
 public:
-    Star(unsigned short t_X, unsigned short t_Y);
+    Star(float t_X, float t_Y);
     Star() = delete;
     ~Star() = default;
 
     void update();
     sf::Vector2f getPosition();
-    void setPosition(unsigned short t_X, unsigned short t_Y);
+    void setPosition(float t_X, float t_Y);
 
     void fall();
 private:
     sf::CircleShape shape;
     const float starRadius{ 2.0f };
-    const float starVelocity{ 0.3f };
+    const float starVelocity{ 0.5f };
     sf::Vector2f velocity{ 0, starVelocity };
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
 
 };
 
-Star::Star(unsigned short t_X, unsigned short t_Y)
+Star::Star(float t_X, float t_Y)
 {
     shape.setPosition(t_X, t_Y);
     shape.setRadius(this->starRadius);
@@ -65,7 +65,7 @@ sf::Vector2f Star::getPosition()
 {
     return shape.getPosition();
 }
-void Star::setPosition(unsigned short t_X, unsigned short t_Y)
+void Star::setPosition(float t_X, float t_Y)
 {
     return shape.setPosition(t_X, t_Y);
 }
