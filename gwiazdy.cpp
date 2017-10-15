@@ -127,7 +127,7 @@ int main()
     window.setFramerateLimit(60);
     sf::Event event;
 
-    SpaceShip battleShip(400, 540);
+    SpaceShip battleShip(385, 540);
 
     std::vector<Star> star;   //  Tworzenie obiektów gwiazd
     for(int i = 0; i < 30; i++)
