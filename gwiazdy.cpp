@@ -11,7 +11,6 @@ public:
     ~SpaceShip() = default;
 
     void update();
-
     sf::Vector2f getPosition();
 
     float left();
@@ -33,12 +32,15 @@ public:
     Star() = delete;
     ~Star() = default;
 
-    void moveDown();
     void update();
+    sf::Vector2f getPosition();
+    void setPosition(unsigned short t_X, unsigned short t_Y);
+
+    void fall();
 private:
     sf::CircleShape shape;
     const float starRadius{ 2.0f };
-    const float starVelocity{ 0.5f };
+    const float starVelocity{ 0.3f };
     sf::Vector2f velocity{ 0, starVelocity };
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
 
@@ -59,7 +61,15 @@ void Star::update()
 {
     shape.move(this->velocity);
 }
-void Star::moveDown()
+sf::Vector2f Star::getPosition()
+{
+    return shape.getPosition();
+}
+void Star::setPosition(unsigned short t_X, unsigned short t_Y)
+{
+    return shape.setPosition(t_X, t_Y);
+}
+void Star::fall()
 {
     this->velocity.y = starVelocity;
 }
@@ -90,6 +100,10 @@ void SpaceShip::update()
         velocity.x = 0;
     }
 }
+sf::Vector2f SpaceShip::getPosition()
+{
+    return shape.getPosition();
+}
 float SpaceShip::left()
 {
     return this->shape.getPosition().x - shape.getSize().x / 2.f;
@@ -106,10 +120,6 @@ float SpaceShip::bottom()
 {
     return this->shape.getPosition().y + shape.getSize().y / 2.f;
 }
-sf::Vector2f SpaceShip::getPosition()
-{
-    return shape.getPosition();
-}
 
 int main()
 {
@@ -122,7 +132,7 @@ int main()
     std::vector<Star> star;   //  Tworzenie obiektów gwiazd
     for(int i = 0; i < 30; i++)
     {
-        star.emplace_back(Star(rand()%800, rand()%600));
+        star.push_back(Star(rand()%800, rand()%600));
     }
 
     while(true)
@@ -140,6 +150,9 @@ int main()
         for(int i = 0; i < 30; ++i)
         {
             star[i].update();
+
+            if(star[i].getPosition().y > 600)
+                star[i].setPosition(rand()%800, 0);
 
             window.draw(star[i]);
         }
