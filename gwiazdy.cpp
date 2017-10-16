@@ -3,6 +3,12 @@
 #include "cstdlib"
 #include "vector"
 
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+#define SHIP_WIDTH 30
+#define SHIP_HEIGHT 50
+#define NUMBER_OF_STARS 50
+
 class SpaceShip : public sf::Drawable
 {
 public:
@@ -20,8 +26,8 @@ public:
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
     sf::RectangleShape shape;
-    const float spaceShipWidth{ 30.0f };
-    const float spaceShipHeight{ 50.0f };
+    const float spaceShipWidth{ SHIP_WIDTH };
+    const float spaceShipHeight{ SHIP_HEIGHT };
     const float spaceShipVelocity{ 15.0f };
     sf::Vector2f velocity { spaceShipVelocity, 0.f };
 };
@@ -92,7 +98,7 @@ void SpaceShip::update()
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && this->left() > 0)
     {
         velocity.x = -spaceShipVelocity;
-    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && this->right() < 800)
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && this->right() < SCREEN_WIDTH)
     {
         velocity.x = spaceShipVelocity;
     }else
@@ -123,16 +129,16 @@ float SpaceShip::bottom()
 
 int main()
 {
-    sf::RenderWindow window( sf::VideoMode(800, 600), "Space Invaders by Serwicki & Siwon (BETA)" );
+    sf::RenderWindow window( sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Space Invaders by Serwicki & Siwon (BETA)" );
     window.setFramerateLimit(60);
     sf::Event event;
 
-    SpaceShip battleShip(385, 540);
+    SpaceShip battleShip(SCREEN_WIDTH/2-SHIP_WIDTH/2, SCREEN_HEIGHT-60);
 
     std::vector<Star> star;   //  Tworzenie obiektów gwiazd
-    for(int i = 0; i < 30; i++)
+    for(int i = 0; i < NUMBER_OF_STARS; i++)
     {
-        star.push_back(Star(rand()%800, rand()%600));
+        star.push_back(Star(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT));
     }
 
     while(true)
@@ -147,12 +153,12 @@ int main()
 
         battleShip.update();
 
-        for(int i = 0; i < 30; ++i)
+        for(int i = 0; i < NUMBER_OF_STARS; ++i)
         {
             star[i].update();
 
-            if(star[i].getPosition().y > 600)
-                star[i].setPosition(rand()%800, 0);
+            if(star[i].getPosition().y > SCREEN_HEIGHT)
+                star[i].setPosition(rand()%SCREEN_WIDTH, 0);
 
             window.draw(star[i]);
         }
