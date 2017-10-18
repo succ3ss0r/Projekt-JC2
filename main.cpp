@@ -1,3 +1,10 @@
+/*********************************************
+********* Serwicki Jakub, Siwoń Paweł ********
+***** PROJEKT Z PODSTAW PROGRAMOWANIA C2 *****
+*************** SPACE INVADERS ***************
+******* POLITECHNIKA ŚWIĘTOKRZYSKA 2017 ******
+*********************************************/
+
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "cstdlib"
@@ -35,7 +42,7 @@ int main()
         }
     }
 
-    std::vector<Star> star;   //  Tworzenie obiekt�w gwiazd
+    std::vector<Star> star;   //  Tworzenie obiektów gwiazd
     for(int i = 0; i < NUMBER_OF_STARS; i++)
     {
         star.push_back(Star(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT));
