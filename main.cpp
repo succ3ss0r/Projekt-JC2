@@ -7,25 +7,13 @@
 
 #include "Engine.hpp"
 
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+
 int main()
 {
-    Engine engine;
-    engine.initializeWindow();
-    sf::Event event;
-    engine.initializeBackground();
-    engine.initializeBattleShip();
-    engine.initializeEnemies();
-
-    while(true) {
-        engine.catchEvent(window, event);
-        if(engine.cancelWindow(window, event)) break;
-        window.clear(sf::Color::Black);
-
-        engine.starUpdate(window, star);
-        engine.battleShipUpdate(window, battleShip);
-        engine.enemiesUpdate(window, enemies);
-        engine.windowUpdate(window);
-    }
+    Engine engine(SCREEN_WIDTH, SCREEN_HEIGHT, "Space Invaders by Serwicki & Siwon BETA");
+    engine.loop();
 }
 
 //        for(auto& enemy : enemies) if(collisionTest(enemy)) break;

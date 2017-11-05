@@ -6,14 +6,13 @@
 
 class Engine {
 public:
+    Engine(unsigned int t_X, unsigned int t_Y, std::string title);
+    ~Engine();
     void initializeWindow();
-    void initializeBackground();
-    void initializeBattleShip();
-    void initializeEnemies();
-    void catchEvent(sf::RenderWindow window, sf::Event event);
-    void starUpdate(sf::RenderWindow window, std::vector<Star> star);
-    void battleShipUpdate(sf::RenderWindow window, SpaceShip battleShip);
-    void enemiesUpdate(sf::RenderWindow window, std::vector<Enemy> enemies);
-    void windowUpdate(sf::RenderWindow window);
+    void loop();
     bool cancelWindow(sf::RenderWindow window, sf::Event event);
+private:
+    unsigned int t_X, t_Y;
+    sf::RenderWindow *window;
+    std::vector<Star> star;
 };
