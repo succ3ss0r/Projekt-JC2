@@ -7,12 +7,9 @@
 
 #include "Engine.hpp"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
-
 int main()
 {
-    Engine engine(SCREEN_WIDTH, SCREEN_HEIGHT, "Space Invaders by Serwicki & Siwon BETA");
+    Engine engine(800, 600, "Space Invaders by Serwicki & Siwon BETA");
 
     engine.loop();
 }
