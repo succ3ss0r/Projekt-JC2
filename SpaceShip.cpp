@@ -1,7 +1,12 @@
 #include "SpaceShip.hpp"
 
+#ifndef SCREEN_WIDTH
 #define SCREEN_WIDTH 800
+#endif
+
+#ifndef SCREEN_HEIGHT
 #define SCREEN_HEIGHT 600
+#endif
 
 SpaceShip::SpaceShip(float t_X, float t_Y)
 {

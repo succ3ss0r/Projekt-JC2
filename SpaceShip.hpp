@@ -22,6 +22,6 @@ private:
     sf::RectangleShape shape;
     const float spaceShipWidth{ SHIP_WIDTH };
     const float spaceShipHeight{ SHIP_HEIGHT };
-    const float spaceShipVelocity{ 15.0f };
+    const float spaceShipVelocity{ 10.0f };
     sf::Vector2f velocity { spaceShipVelocity, 0.f };
 };
