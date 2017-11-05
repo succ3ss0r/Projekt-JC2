@@ -6,7 +6,7 @@
 class SpaceShip : public sf::Drawable
 {
 public:
-    SpaceShip(float t_X, float t_Y);
+    SpaceShip(float t_X, float t_Y, float width, float height);
     SpaceShip() = delete;
     ~SpaceShip() = default;
 
@@ -18,10 +18,11 @@ public:
     float top();
     float bottom();
 private:
+    float t_X, t_Y;
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
     sf::RectangleShape shape;
-    const float spaceShipWidth{ SHIP_WIDTH };
-    const float spaceShipHeight{ SHIP_HEIGHT };
+    float spaceShipWidth;
+    float spaceShipHeight;
     const float spaceShipVelocity{ 10.0f };
     sf::Vector2f velocity { spaceShipVelocity, 0.f };
 };

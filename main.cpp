@@ -13,10 +13,6 @@
 int main()
 {
     Engine engine(SCREEN_WIDTH, SCREEN_HEIGHT, "Space Invaders by Serwicki & Siwon BETA");
+
     engine.loop();
 }
-
-//        for(auto& enemy : enemies) if(collisionTest(enemy)) break;
-//
-//        auto iterator = remove_if(begin(enemies), end(enemies), [](Enemy& enemy){ return enemy.isDestroyed(); });
-//        enemies.erase(iterator, end(enemies));

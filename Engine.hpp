@@ -10,9 +10,11 @@ public:
     ~Engine();
     void initializeWindow();
     void loop();
-    bool cancelWindow(sf::RenderWindow window, sf::Event event);
 private:
     unsigned int t_X, t_Y;
     sf::RenderWindow *window;
     std::vector<Star> star;
+    SpaceShip *battleShip;
+    std::vector<Enemy> enemies;
+    sf::Event event;
 };

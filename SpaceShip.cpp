@@ -1,16 +1,12 @@
 #include "SpaceShip.hpp"
 
-#ifndef SCREEN_WIDTH
-#define SCREEN_WIDTH 800
-#endif
-
-#ifndef SCREEN_HEIGHT
-#define SCREEN_HEIGHT 600
-#endif
-
-SpaceShip::SpaceShip(float t_X, float t_Y)
+SpaceShip::SpaceShip(float t_X, float t_Y, float width, float height)
 {
-    shape.setPosition(t_X, t_Y);
+    this->spaceShipWidth = width;
+    this->spaceShipHeight = height;
+    this->t_X = t_X;
+    this->t_Y = t_Y;
+    shape.setPosition(t_X/2-width/2, t_Y-60);
     shape.setSize(sf::Vector2f{this->spaceShipWidth, this->spaceShipHeight});
     shape.setFillColor(sf::Color::Red);
     shape.setOrigin(spaceShipWidth/2.f, spaceShipHeight/2.f);
@@ -26,7 +22,7 @@ void SpaceShip::update()
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && this->left() > 0)
     {
         velocity.x = -spaceShipVelocity;
-    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && this->right() < SCREEN_WIDTH)
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && this->right() < t_X)
     {
         velocity.x = spaceShipVelocity;
     }else

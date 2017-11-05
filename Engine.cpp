@@ -8,9 +8,20 @@ Engine::Engine(unsigned int t_X, unsigned int t_Y, std::string title) {
     this->t_X = t_X;
     this->t_Y = t_Y;
 
+    battleShip = new SpaceShip(t_X, t_Y, 30, 50);
+
     for(int i = 0; i < t_X * 0.1; i++)
     {
         star.push_back(Star(rand()%t_X, rand()%t_Y));
+    }
+
+    int enemyX{ 10 }, enemyY{ 4 }, enemyWidth{ 40 }, enemyHeight{ 40 };
+    for(int i = 0; i < enemyY; i++)
+    {
+        for(int j = 0; j < enemyX; j++)
+        {
+            enemies.emplace_back((j + 3.5) * (enemyWidth + 10), (i + 1) * (enemyHeight + 10), enemyWidth, enemyHeight);
+        }
     }
 }
 Engine::~Engine() {
@@ -19,6 +30,10 @@ Engine::~Engine() {
 void Engine::loop() {
     while(true) {
         window->clear(sf::Color::Black);
+        window->pollEvent(event);
+
+        if(event.type == sf::Event::Closed)
+            window->close();
 
         for(unsigned int i = 0; i < star.size(); ++i) {
             star[i].update();
@@ -28,12 +43,12 @@ void Engine::loop() {
             window->draw(star[i]);
         }
 
+        battleShip->update();
+        window->draw(*battleShip);
+
+        for(auto& enemy : enemies)
+            window->draw(enemy);
+
         window->display();
     }
-}
-bool Engine::cancelWindow(sf::RenderWindow window, sf::Event event) {
-    if(event.type == sf::Event::Closed){
-        window.close();
-        return true;
-    } else return false;
 }
