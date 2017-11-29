@@ -1,7 +1,6 @@
 #include "SFML/Graphics.hpp"
 
-class Enemy : public sf::Drawable
-{
+class Enemy : public sf::Drawable {
 public:
     Enemy(float t_X, float t_Y, float t_Width, float t_Height);
     Enemy() = delete;
@@ -18,6 +17,7 @@ public:
     bool isDestroyed();
     void destroy();
     sf::Vector2f getSize();
+    bool collisionTest(sf::RenderTarget& target, sf::RenderStates states);
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     sf::RectangleShape shape;

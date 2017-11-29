@@ -1,7 +1,6 @@
 #include "SFML/Graphics.hpp"
 
-class Star : public sf::Drawable
-{
+class Star : public sf::Drawable {
 public:
     Star(float t_X, float t_Y);
     Star() = delete;

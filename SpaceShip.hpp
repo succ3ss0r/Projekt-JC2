@@ -1,10 +1,6 @@
 #include "SFML/Graphics.hpp"
 
-#define SHIP_WIDTH 30
-#define SHIP_HEIGHT 50
-
-class SpaceShip : public sf::Drawable
-{
+class SpaceShip : public sf::Drawable {
 public:
     SpaceShip(float t_X, float t_Y, float width, float height);
     SpaceShip() = delete;

@@ -1,7 +1,6 @@
 #include "SpaceShip.hpp"
 
-SpaceShip::SpaceShip(float t_X, float t_Y, float width, float height)
-{
+SpaceShip::SpaceShip(float t_X, float t_Y, float width, float height) {
     this->spaceShipWidth = width;
     this->spaceShipHeight = height;
     this->t_X = t_X;
@@ -11,42 +10,32 @@ SpaceShip::SpaceShip(float t_X, float t_Y, float width, float height)
     shape.setFillColor(sf::Color::Red);
     shape.setOrigin(spaceShipWidth/2.f, spaceShipHeight/2.f);
 }
-void SpaceShip::draw(sf::RenderTarget& target, sf::RenderStates state) const
-{
+void SpaceShip::draw(sf::RenderTarget& target, sf::RenderStates state) const {
     target.draw(this->shape, state);
 }
-void SpaceShip::update()
-{
+void SpaceShip::update() {
     this->shape.move(this->velocity);
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && this->left() > 0)
-    {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && this->left() > 0) {
         velocity.x = -spaceShipVelocity;
-    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && this->right() < t_X)
-    {
+    } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && this->right() < t_X) {
         velocity.x = spaceShipVelocity;
-    }else
-    {
+    } else {
         velocity.x = 0;
     }
 }
-sf::Vector2f SpaceShip::getPosition()
-{
+sf::Vector2f SpaceShip::getPosition() {
     return shape.getPosition();
 }
-float SpaceShip::left()
-{
+float SpaceShip::left() {
     return this->shape.getPosition().x - shape.getSize().x / 2.f;
 }
-float SpaceShip::right()
-{
+float SpaceShip::right() {
     return this->shape.getPosition().x + shape.getSize().x / 2.f;
 }
-float SpaceShip::top()
-{
+float SpaceShip::top() {
     return this->shape.getPosition().y - shape.getSize().y / 2.f;
 }
-float SpaceShip::bottom()
-{
+float SpaceShip::bottom() {
     return this->shape.getPosition().y + shape.getSize().y / 2.f;
 }
