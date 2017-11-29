@@ -10,7 +10,7 @@ Engine::Engine(unsigned int t_X, unsigned int t_Y, std::string title) {
 
     score = new Score(10.f, 30.f);
 
-    battleShip = new SpaceShip(t_X, t_Y, 30, 50);  //  Stworzenie obiektu statku gracza
+    battleShip = new SpaceShip(t_X, t_Y, 40, 50);  //  Stworzenie obiektu statku gracza
 
     for(int i = 0; i < t_X * 0.1; i++) { //  Tworzenie obiektów gwiazd
         star.push_back(Star(rand()%t_X, rand()%t_Y));

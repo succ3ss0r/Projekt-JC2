@@ -9,11 +9,6 @@ public:
     void update();
     sf::Vector2f getPosition();
 
-    float left();
-    float right();
-    float top();
-    float bottom();
-
     sf::Vector2f getSize();
     bool collisionTest(sf::RenderTarget& target, sf::RenderStates states);
 private:
@@ -21,6 +16,7 @@ private:
     static sf::Vector2f chart(float X, short type);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     sf::RectangleShape shape;
+    sf::Texture texture;
     bool destroyed{ false };
     float enemyShipVelocity{ 1.5f };
     sf::Vector2f velocity { enemyShipVelocity, 0.f };
