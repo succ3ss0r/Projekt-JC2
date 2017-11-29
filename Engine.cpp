@@ -1,6 +1,5 @@
 #include "cstdlib"
 #include "vector"
-#include "iostream"
 #include "Engine.hpp"
 
 Engine::Engine(unsigned int t_X, unsigned int t_Y, std::string title) {
@@ -17,12 +16,12 @@ Engine::Engine(unsigned int t_X, unsigned int t_Y, std::string title) {
         star.push_back(Star(rand()%t_X, rand()%t_Y));
     }
 
-    int enemyX{ 10 }, enemyY{ 1 }, enemyWidth{ 40 }, enemyHeight{ 40 };  //  Zmienne wykorzystywane podczas tworzenia wrogich jednostek
+    int enemyX{ 1 }, enemyY{ 1 }, enemyWidth{ 40 }, enemyHeight{ 40 };  //  Zmienne wykorzystywane podczas tworzenia wrogich jednostek
     for(int i = 0; i < enemyY; i++)  //  Tworzenie obiektów wrogich jednostek
     {
         for(int j = 0; j < enemyX; j++)
         {
-            enemies.emplace_back(-enemyWidth, -enemyHeight, enemyWidth, enemyHeight, 1);
+            enemies.emplace_back(-enemyWidth, -enemyHeight, enemyWidth, enemyHeight, 2);
         }
     }
 }
@@ -55,7 +54,7 @@ void Engine::loop() {
             window->draw(enemy);
         }
 
-        score->increment(1);
+        score->increment(10);
         score->update();
         window->draw(score->playerScore);
 

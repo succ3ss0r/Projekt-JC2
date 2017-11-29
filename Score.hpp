@@ -1,5 +1,5 @@
-#include <SFML/Graphics.hpp>
-#include <sstream>
+#include "SFML/Graphics.hpp"
+#include "sstream"
 
 class Score {
 public:

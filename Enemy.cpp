@@ -45,8 +45,28 @@ sf::Vector2f Enemy::chart(float X, short type) {
         else
             Y = (X - 800) * (X - 800) * 0.003;
 
-        v = {X + 0.5f, Y};
+        X += 0.5f;
     }
+    if(type == 2) {
+        int r = 100, znak = 1;
+
+        int positionInType = X / 50;
+        int chartType = positionInType % 4;// 0 1 2 3
+
+        positionInType = positionInType / 2 + positionInType % 2;
+
+        positionInType = positionInType * 100;
+
+        if(chartType == 1 || chartType == 2){
+            r += 159;
+            znak = -1;
+        }
+
+        Y = znak * (X - positionInType) * (X - positionInType) * 2 / 63 + r;
+        X += 1.0f;
+    }
+
+    v = {X, Y};
 
     return v;
 }
