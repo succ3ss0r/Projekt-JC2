@@ -38,14 +38,15 @@ sf::Vector2f Enemy::getSize() {
 }
 sf::Vector2f Enemy::chart(float X, short type) {
     float Y = X;
+    sf::Vector2f v = {X, Y};
     if(type == 1){
-        enemyShipVelocity = 1.7f;
         if(X < 400)
             Y = X * X * 0.003;
         else
             Y = (X - 800) * (X - 800) * 0.003;
+
+        v = {X + 0.5f, Y};
     }
-    sf::Vector2f v = {X, Y};
 
     return v;
 }

@@ -18,10 +18,10 @@ public:
     bool collisionTest(sf::RenderTarget& target, sf::RenderStates states);
 private:
     short type;
-    sf::Vector2f chart(float X, short type);
+    static sf::Vector2f chart(float X, short type);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     sf::RectangleShape shape;
     bool destroyed{ false };
-    float enemyShipVelocity{ 1.0f };
+    float enemyShipVelocity{ 1.5f };
     sf::Vector2f velocity { enemyShipVelocity, 0.f };
 };
