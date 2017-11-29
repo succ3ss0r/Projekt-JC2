@@ -33,9 +33,3 @@ float SpaceShip::left() {
 float SpaceShip::right() {
     return this->shape.getPosition().x + shape.getSize().x / 2.f;
 }
-float SpaceShip::top() {
-    return this->shape.getPosition().y - shape.getSize().y / 2.f;
-}
-float SpaceShip::bottom() {
-    return this->shape.getPosition().y + shape.getSize().y / 2.f;
-}

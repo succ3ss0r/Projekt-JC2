@@ -9,7 +9,6 @@ public:
 
     void update();
     void increment(int pluss);
-    int print();
     sf::Text playerScore;
 private:
     std::ostringstream ssScore;

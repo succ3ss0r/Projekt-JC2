@@ -11,8 +11,6 @@ public:
 
     float left();
     float right();
-    float top();
-    float bottom();
 private:
     float t_X, t_Y;
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;

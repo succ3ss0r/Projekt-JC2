@@ -17,17 +17,18 @@ Engine::Engine(unsigned int t_X, unsigned int t_Y, std::string title) {
         star.push_back(Star(rand()%t_X, rand()%t_Y));
     }
 
-    int enemyX{ 10 }, enemyY{ 4 }, enemyWidth{ 40 }, enemyHeight{ 40 };  //  Zmienne wykorzystywane podczas tworzenia wrogich jednostek
+    int enemyX{ 10 }, enemyY{ 1 }, enemyWidth{ 40 }, enemyHeight{ 40 };  //  Zmienne wykorzystywane podczas tworzenia wrogich jednostek
     for(int i = 0; i < enemyY; i++)  //  Tworzenie obiektów wrogich jednostek
     {
         for(int j = 0; j < enemyX; j++)
         {
-            enemies.emplace_back((j + 3.5) * (enemyWidth + 10), (i + 1) * (enemyHeight + 10), enemyWidth, enemyHeight);
+            enemies.emplace_back(-enemyWidth, -enemyHeight, enemyWidth, enemyHeight, 1);
         }
     }
 }
 Engine::~Engine() {
     delete battleShip;
+    delete score;
     delete window;
 }
 void Engine::loop() {
@@ -54,7 +55,6 @@ void Engine::loop() {
             window->draw(enemy);
         }
 
-        std::cout << score->print();
         score->increment(1);
         score->update();
         window->draw(score->playerScore);

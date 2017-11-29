@@ -16,6 +16,7 @@ private:
     std::vector<Star> star;
     SpaceShip *battleShip;
     std::vector<Enemy> enemies;
+    std::vector<Enemy>::iterator it;
     sf::Event event;
     Score *score;
 };
