@@ -1,10 +1,10 @@
 #include "Score.hpp"
 
-Score::Score(float t_Position, float t_Size) {
+Score::Score(float o_Position, float o_Size) {
         this->openSans.loadFromFile("OpenSans-Regular.ttf");
         this->playerScore.setFont(this->openSans);
-        this->playerScore.setCharacterSize(t_Size);
-        this->playerScore.setPosition({t_Position, t_Position});
+        this->playerScore.setCharacterSize(o_Size);
+        this->playerScore.setPosition({o_Position, o_Position});
 }
 void Score::update() {
     this->ssScore.str("");

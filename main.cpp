@@ -11,5 +11,7 @@ int main()
 {
     Engine engine(800, 600, "Space Invaders by Serwicki & Siwon BETA");
 
-    engine.loop();
+    engine.eMenu();
+    if(engine.option == 0)
+        engine.game();
 }

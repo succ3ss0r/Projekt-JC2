@@ -1,11 +1,11 @@
 #include "SpaceShip.hpp"
 
-SpaceShip::SpaceShip(float t_X, float t_Y, float width, float height) {
-    this->spaceShipWidth = width;
-    this->spaceShipHeight = height;
-    this->t_X = t_X;
-    this->t_Y = t_Y;
-    shape.setPosition(t_X/2-width/2, t_Y-60);
+SpaceShip::SpaceShip(float w_Width, float w_Height, float o_Width, float o_Height) {
+    this->spaceShipWidth = o_Width;
+    this->spaceShipHeight = o_Height;
+    this->w_Width = w_Width;
+    this->w_Height = w_Height;
+    shape.setPosition(w_Width/2-o_Width/2, w_Height-60);
     shape.setSize(sf::Vector2f{this->spaceShipWidth, this->spaceShipHeight});
     shape.setFillColor(sf::Color::Red);
     shape.setOrigin(spaceShipWidth/2.f, spaceShipHeight/2.f);
@@ -18,7 +18,7 @@ void SpaceShip::update() {
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && this->left() > 0) {
         velocity.x = -spaceShipVelocity;
-    } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && this->right() < t_X) {
+    } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && this->right() < w_Width) {
         velocity.x = spaceShipVelocity;
     } else {
         velocity.x = 0;

@@ -3,7 +3,7 @@
 
 class Score {
 public:
-    Score(float t_Position, float t_Size);
+    Score(float o_Position, float o_Size);
     Score() = delete;
     ~Score() = default;
 

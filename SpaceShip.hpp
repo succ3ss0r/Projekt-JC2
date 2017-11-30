@@ -2,7 +2,7 @@
 
 class SpaceShip : public sf::Drawable {
 public:
-    SpaceShip(float t_X, float t_Y, float width, float height);
+    SpaceShip(float w_Width, float w_Height, float width, float height);
     SpaceShip() = delete;
     ~SpaceShip() = default;
 
@@ -12,7 +12,7 @@ public:
     float left();
     float right();
 private:
-    float t_X, t_Y;
+    float w_Width, w_Height;
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
     sf::RectangleShape shape;
     float spaceShipWidth;

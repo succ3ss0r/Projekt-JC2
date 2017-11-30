@@ -2,7 +2,7 @@
 
 class Enemy : public sf::Drawable {
 public:
-    Enemy(float t_X, float t_Y, float t_Width, float t_Height, short type);
+    Enemy(float w_Width, float w_Height, float o_Width, float o_Height, short type);
     Enemy() = delete;
     ~Enemy() = default;
 

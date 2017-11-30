@@ -1,11 +1,11 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy(float t_X, float t_Y, float t_Width, float t_Height, short type) {
+Enemy::Enemy(float w_Width, float w_Height, float o_Width, float o_Height, short type) {
     this->type = type;
     texture.loadFromFile("images/kosmita.png");
     shape.setTexture(&texture, true);
-    shape.setSize(sf::Vector2f{t_Width, t_Height});
-    shape.setOrigin(t_Width/2.f, t_Height/2.f);
+    shape.setSize(sf::Vector2f{o_Width, o_Height});
+    shape.setOrigin(o_Width/2.f, o_Height/2.f);
 }
 void Enemy::update() {
     this->shape.move(this->velocity);

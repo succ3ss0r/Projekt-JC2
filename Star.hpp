@@ -2,13 +2,13 @@
 
 class Star : public sf::Drawable {
 public:
-    Star(float t_X, float t_Y);
+    Star(float w_Width, float w_Height);
     Star() = delete;
     ~Star() = default;
 
     void update();
     sf::Vector2f getPosition();
-    void setPosition(float t_X, float t_Y);
+    void setPosition(float w_Width, float w_Height);
 
     void fall();
 private:

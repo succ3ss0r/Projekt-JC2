@@ -4,14 +4,19 @@
 #include "Enemy.hpp"
 #include "Star.hpp"
 #include "Score.hpp"
+#include "Menu.hpp"
 
 class Engine {
 public:
-    Engine(unsigned int t_X, unsigned int t_Y, std::string title);
+    Engine(unsigned int w_Width, unsigned int w_Height, std::string title);
     ~Engine();
-    void loop();
+
+    short option = -1;
+
+    void game();
+    void eMenu();
 private:
-    unsigned int t_X, t_Y;
+    unsigned int w_Width, w_Height;
     sf::RenderWindow *window;
     std::vector<Star> star;
     SpaceShip *battleShip;
@@ -19,4 +24,5 @@ private:
     std::vector<Enemy>::iterator it;
     sf::Event event;
     Score *score;
+    Menu *oMenu;
 };
