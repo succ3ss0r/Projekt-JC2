@@ -15,6 +15,7 @@ private:
     float w_Width, w_Height;
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
     sf::RectangleShape shape;
+    sf::Texture texture;
     float spaceShipWidth;
     float spaceShipHeight;
     const float spaceShipVelocity{ 10.0f };

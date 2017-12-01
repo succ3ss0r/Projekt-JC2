@@ -5,9 +5,10 @@ SpaceShip::SpaceShip(float w_Width, float w_Height, float o_Width, float o_Heigh
     this->spaceShipHeight = o_Height;
     this->w_Width = w_Width;
     this->w_Height = w_Height;
+    texture.loadFromFile("images/SpaceShip.png");
+    shape.setTexture(&texture, true);
     shape.setPosition(w_Width/2-o_Width/2, w_Height-60);
     shape.setSize(sf::Vector2f{this->spaceShipWidth, this->spaceShipHeight});
-    shape.setFillColor(sf::Color::Red);
     shape.setOrigin(spaceShipWidth/2.f, spaceShipHeight/2.f);
 }
 void SpaceShip::draw(sf::RenderTarget& target, sf::RenderStates state) const {
