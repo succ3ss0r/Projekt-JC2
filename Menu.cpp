@@ -3,6 +3,10 @@
 Menu::Menu(float w_Width, float w_Height) {
     openSans.loadFromFile("OpenSans-Regular.ttf");
 
+    soundBuf.loadFromFile("music/battle.ogg");
+    sound.setBuffer(soundBuf);
+    sound.setLoop(true);
+
     texture.loadFromFile("images/kosmita.png");
     shape.setTexture(&texture, true);
     shape.setSize(sf::Vector2f{w_Width / 4, w_Height / 3});
@@ -45,4 +49,10 @@ void Menu::moveDown() {
 }
 void Menu::draw(sf::RenderTarget& target, sf::RenderStates state) const {
     target.draw(this->shape, state);
+}
+void Menu::playMenuMusic() {
+    sound.play();
+}
+void Menu::stopMenuMusic() {
+    sound.stop();
 }

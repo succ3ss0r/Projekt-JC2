@@ -23,7 +23,7 @@ Engine::Engine(unsigned int w_Width, unsigned int w_Height, std::string title) {
     {
         for(int j = 0; j < enemyX; j++)
         {
-            enemies.emplace_back(-enemyWidth, -enemyHeight, enemyWidth, enemyHeight, 2);
+            enemies.emplace_back(-enemyWidth, -enemyHeight, enemyWidth, enemyHeight, 1);
         }
     }
 }
@@ -34,6 +34,7 @@ Engine::~Engine() {
     delete window;
 }
 void Engine::eMenu() {
+    oMenu->playMenuMusic();
     while(true && this->option == -1) {
         while(window->pollEvent(event) && this->option == -1) {
             if(event.type == sf::Event::Closed){

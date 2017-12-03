@@ -1,4 +1,5 @@
 #include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
 
 class Menu : public sf::Drawable {
 public:
@@ -11,6 +12,8 @@ public:
     void moveUp();
     void moveDown();
     short getPressedItem() { return selectedItem; };
+    void playMenuMusic();
+    void stopMenuMusic();
 private:
     short selectedItem;
     sf::Font openSans;
@@ -18,5 +21,7 @@ private:
     sf::Color color[2] = { sf::Color::White, sf::Color::Red };
     sf::RectangleShape shape;
     sf::Texture texture;
+    sf::SoundBuffer soundBuf;
+    sf::Sound sound;
 };
 

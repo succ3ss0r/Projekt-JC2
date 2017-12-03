@@ -27,7 +27,7 @@ sf::Vector2f Enemy::getSize() {
 sf::Vector2f Enemy::chart(float X, short type) {
     float Y = X;
     sf::Vector2f v = {X, Y};
-    if(type == 1){
+    if(type == 1) {
         if(X < 400)
             Y = X * X * 0.003;
         else
