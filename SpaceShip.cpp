@@ -6,7 +6,7 @@ SpaceShip::SpaceShip(float w_Width, float w_Height, float o_Width, float o_Heigh
     this->w_Width = w_Width;
     this->w_Height = w_Height;
     texture.loadFromFile("images/SpaceShip.png");
-    shape.setTexture(&texture, true);
+    shape.setTexture(&texture);
     shape.setPosition(w_Width/2-o_Width/2, w_Height-60);
     shape.setSize(sf::Vector2f{this->spaceShipWidth, this->spaceShipHeight});
     shape.setOrigin(spaceShipWidth/2.f, spaceShipHeight/2.f);
@@ -34,3 +34,4 @@ float SpaceShip::left() {
 float SpaceShip::right() {
     return this->shape.getPosition().x + shape.getSize().x / 2.f;
 }
+

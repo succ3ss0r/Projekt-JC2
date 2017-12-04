@@ -21,3 +21,4 @@ private:
     const float spaceShipVelocity{ 10.0f };
     sf::Vector2f velocity { spaceShipVelocity, 0.f };
 };
+

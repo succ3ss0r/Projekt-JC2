@@ -58,3 +58,4 @@ sf::Vector2f Enemy::chart(float X, short type) {
 
     return v;
 }
+

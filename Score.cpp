@@ -14,3 +14,4 @@ void Score::update() {
 void Score::increment(int pluss) {
     this->score += pluss;
 }
+

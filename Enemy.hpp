@@ -21,3 +21,4 @@ private:
     float enemyShipVelocity{ 1.5f };
     sf::Vector2f velocity { enemyShipVelocity, 0.f };
 };
+
