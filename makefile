@@ -9,6 +9,7 @@ OBJ =\
 	Score.o \
 	Shot.o \
 	SpaceShip.o \
+	Health.o \
 	main.o
 
 all: main
