@@ -11,8 +11,8 @@ public:
     void setPosition(float w_Width, float w_Height);
 private:
     sf::CircleShape shape;
-    const float BackgroundRadius{ 2.0f };
-    const float BackgroundVelocity{ 2.f };
+    const float BackgroundRadius = 2.0f;
+    const float BackgroundVelocity = 2.f;
     sf::Vector2f velocity{ 0, BackgroundVelocity };
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
 };

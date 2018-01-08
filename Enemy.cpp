@@ -2,8 +2,6 @@
 
 Enemy::Enemy(float w_Width, float w_Height, float o_Width, float o_Height, short type) {
     this->type = type;
-    texture.loadFromFile("images/kosmita.png");
-    shape.setTexture(&texture, true);
     shape.setSize(sf::Vector2f{o_Width, o_Height});
     shape.setOrigin(o_Width/2.f, o_Height/2.f);
 }
@@ -24,21 +22,21 @@ sf::Vector2f Enemy::getPosition() {
 sf::Vector2f Enemy::getSize() {
     return shape.getSize();
 }
-sf::Vector2f Enemy::chart(float X, short type) {
-    float Y = X;
-    sf::Vector2f v = {X, Y};
+sf::Vector2f Enemy::chart(float pos_X, short type) {
+    float pos_Y = pos_X;
+    sf::Vector2f v = {pos_X, pos_Y};
     if(type == 1) {
-        if(X < 400)
-            Y = X * X * 0.003;
+        if(pos_X < 400)
+            pos_Y = pos_X * pos_X * 0.003;
         else
-            Y = (X - 800) * (X - 800) * 0.003;
+            pos_Y = (pos_X - 800) * (pos_X - 800) * 0.003;
 
-        X += 0.5f;
+        pos_X += 1.f;
     }
     if(type == 2) {
         int r = 100, znak = 1;
 
-        int positionInType = X / 50;
+        int positionInType = pos_X / 50;
         int chartType = positionInType % 4;// 0 1 2 3
 
         positionInType = positionInType / 2 + positionInType % 2;
@@ -50,12 +48,16 @@ sf::Vector2f Enemy::chart(float X, short type) {
             znak = -1;
         }
 
-        Y = znak * (X - positionInType) * (X - positionInType) * 2 / 63 + r;
-        X += 1.0f;
+        pos_Y = znak * (pos_X - positionInType) * (pos_X - positionInType) * 2 / 63 + r;
+        pos_X += 1.0f;
     }
 
-    v = {X, Y};
+    v = {pos_X, pos_Y};
 
     return v;
+}
+void Enemy::setTexture() {
+    texture.loadFromFile("images/kosmita.png");
+    shape.setTexture(&texture);
 }
 

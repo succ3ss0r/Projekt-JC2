@@ -18,7 +18,7 @@ private:
     sf::Texture texture;
     float spaceShipWidth;
     float spaceShipHeight;
-    const float spaceShipVelocity{ 10.0f };
+    const float spaceShipVelocity = 10.0f;
     sf::Vector2f velocity { spaceShipVelocity, 0.f };
 };
 

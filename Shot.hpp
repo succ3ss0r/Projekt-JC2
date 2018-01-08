@@ -13,7 +13,7 @@ private:
     float shotWidth, shotHeight;
     sf::RectangleShape shotShape;
     sf::Texture texture;
-    const float shotVelocity{ -10.0f };
+    const float shotVelocity = -10.0f;
     sf::Vector2f velocity{ 0, shotVelocity };
     void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
 };

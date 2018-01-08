@@ -31,7 +31,7 @@ Menu::Menu(float w_Width, float w_Height) {
 
     selectedItem = 0; // opcja na ktorej obecnie jest wskaznik
 }
-void Menu::drawMenu(sf::RenderWindow& window) {
+void Menu::drawMenuList(sf::RenderWindow& window) {
     for(int i = 0; i < 3; ++i)
         window.draw(menu[i]);
 }

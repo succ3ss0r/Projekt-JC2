@@ -6,7 +6,7 @@ Shot::Shot(float o_Width, float o_Height) {
     shotShape.setFillColor(sf::Color::Red);
     shotShape.setSize(sf::Vector2f{this->shotWidth, this->shotHeight});
     shotShape.setTexture(&texture);
-    shotShape.setOrigin(shotWidth / 2, shotHeight / 3);
+    shotShape.setOrigin(shotWidth / 2, shotHeight / 2);
 }
 void Shot::draw(sf::RenderTarget& target, sf::RenderStates state) const {
     target.draw(this->shotShape, state);
