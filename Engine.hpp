@@ -8,6 +8,7 @@
 #include "Shot.hpp"
 #include "Health.hpp"
 #include "Lose.hpp"
+#include "Highscore.hpp"
 
 class Engine {
 public:
@@ -20,6 +21,7 @@ public:
     void game(); // g³ówna pêtla gry
     void gameMenu(); // pêtla menu
     void lose();
+    void leaderBoard();
 private:
     unsigned int w_Width, w_Height;
     sf::RenderWindow *window;
@@ -30,6 +32,7 @@ private:
     Menu *oMenu;
     Lose *oLose;
     Health *health;
+    Highscore *oHighscore;
 };
 
 

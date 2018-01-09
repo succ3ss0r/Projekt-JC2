@@ -5,7 +5,7 @@ Health::Health(float o_posX, float o_posY, float o_strSize) {
         this->playerHealth.setFont(this->openSans);
         this->playerHealth.setCharacterSize(o_strSize);
         this->playerHealth.setPosition({o_posX, o_posY});
-        this->o_health = 10;
+        this->o_health = 100;
 }
 void Health::update() {
     this->ssHealth.str("");

@@ -9,7 +9,9 @@ Engine::Engine(unsigned int w_Width, unsigned int w_Height, std::string title) {
     this->w_Height = w_Height;
 
     oMenu = new Menu(window->getSize().x, window->getSize().y); // utworzenie obiektu klasy Menu
+    oMenu->playMenuMusic(); // metoda odpowiedzialna za odtwarzanie dzwieku
     oLose = new Lose(window->getSize().x, window->getSize().y);
+    oHighscore = new Highscore(window->getSize().x, window->getSize().y);
 
     score = new Score(10.f, 30.f); // utworzenie obiektu klasy Score
     health = new Health(200.f, 10.f, 30.f);
@@ -24,15 +26,18 @@ Engine::~Engine() {
     delete battleShip;
     delete score;
     delete health;
+    delete oLose;
     delete oMenu;
+    delete oHighscore;
     delete window;
 }
 void Engine::gameMenu() {
-    oMenu->playMenuMusic(); // metoda odpowiedzialna za odtwarzanie dzwieku
-    while(true && this->option == -1) {
-        while(window->pollEvent(event) && this->option == -1) {
-            if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
-                window->close();
+    while(this->option == -1) {
+        while(window->pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
+                oMenu->stopMenuMusic();
+                oLose->stopLoseMusic();
+                this->option = 2;
                 return;
             }
             if(event.type == sf::Event::KeyReleased) {
@@ -42,12 +47,15 @@ void Engine::gameMenu() {
                     oMenu->moveDown();
                 if(event.key.code == sf::Keyboard::Return) {
                     this->option = oMenu->getPressedItem();
-                    break;
+                    if(this->option == 1)  {
+                        oLose->stopLoseMusic();
+                        this->option = -3;
+                        return;
+                    }
+                    return;
                 }
             }
         }
-        if(this->option == 2)
-                window->close();
 
         window->clear();
         oMenu->drawMenuList(*window);
@@ -55,15 +63,46 @@ void Engine::gameMenu() {
         window->display();
     }
 }
+void Engine::leaderBoard() {
+    oHighscore->printHighscores();
+    window->clear();
+    oHighscore->printLeaderBoard(*window);
+    window->draw(*oHighscore);
+    window->display();
+    while(this->option == -3) {
+        while(window->pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
+                window->close();
+                return;
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                this->option = -1;
+                return;
+            }
+            if(event.type == sf::Event::KeyReleased) {
+                if(event.key.code == sf::Keyboard::Return || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                    this->option = -1;
+                    return;
+                }
+            }
+        }
+    }
+}
 void Engine::lose() {
     oLose->playLoseMusic(); // metoda odpowiedzialna za odtwarzanie dzwieku
     while(this->option == -2) {
         while(window->pollEvent(event)) {
-            if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
+            if(event.type == sf::Event::Closed) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
                 window->close();
+                oLose->stopLoseMusic();
+                oMenu->stopMenuMusic();
+                this->option = 2;
                 return;
             }
-
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                this->option = -1;
+                return;
+            }
             if(event.type == sf::Event::KeyReleased) {
                 if(event.key.code == sf::Keyboard::Up)
                     oLose->moveUp();
@@ -71,7 +110,7 @@ void Engine::lose() {
                     oLose->moveDown();
                 if(event.key.code == sf::Keyboard::Return) {
                     this->option = oLose->getPressedItem();
-                    health->o_health = 10;
+                    health->o_health = 100;
                     score->score = 0;
                     if(this->option == 1)
                         this->option = -1;
@@ -95,6 +134,7 @@ void Engine::game() {
     std::vector<Enemy> enemies;
     std::vector<Shot> shot;
     shot.emplace_back(Shot(4.f, 10.f));
+    shot[0].setPosition(-100, -100);
     unsigned int enemyNum = 8, enemyWidth = 40, enemyHeight = 40, movementType = 1, createdEnemies = 0, destroyedEnemies = 0, forGuard = 0;  //  Zmienne wykorzystywane podczas tworzenia wrogich jednostek
     // forGuard to zmienna ktora jest potrzebna do wyjscia z zagniezdzonych petli for
     while(this->option == 0) {
@@ -111,7 +151,19 @@ void Engine::game() {
 
         if(health->o_health <= 0) {
             this->option = -2;
-            break;
+            return;
+        }
+
+        if(event.type == sf::Event::Closed) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
+            window->close();
+            return;
+        }
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            this->option = -1;
+            health->o_health = 100;
+            score->score = 0;
+            return;
         }
 
         if(enemies.size() != 0) {
@@ -138,16 +190,18 @@ void Engine::game() {
                 }
             }
 
-        if(enemies.size() != 0 && shot.size() != 0) {
+        if(enemies.size() != 0) {
             for(std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end(); ++it) {  //  aktualizacja wrogich jednostek
-                for(std::vector<Shot>::iterator it2 = shot.begin(); it2 != shot.end(); ++it2) {
-                    if(it2->getPosition().y - 5 >= it->getPosition().y - 20 && it2->getPosition().y - 5 <= it->getPosition().y + 20 && it2->getPosition().x - 2 >= it->getPosition().x - 20 && it2->getPosition().x + 2 <= it->getPosition().x +20) {
-                        score->increment(10);
-                        enemies.erase(it);
-                        it2->setPosition(-10,-10);
-                        destroyedEnemies++;
-                        forGuard = 1;
-                        break;
+                if(shot.size() != 0) {
+                    for(std::vector<Shot>::iterator it2 = shot.begin(); it2 != shot.end(); ++it2) {
+                        if(it2->getPosition().y - 5 >= it->getPosition().y - 20 && it2->getPosition().y - 5 <= it->getPosition().y + 20 && it2->getPosition().x - 2 >= it->getPosition().x - 20 && it2->getPosition().x + 2 <= it->getPosition().x +20) {
+                            score->increment(10);
+                            enemies.erase(it);
+                            it2->setPosition(it2->getPosition().x,-10);
+                            destroyedEnemies++;
+                            forGuard = 1;
+                            break;
+                        }
                     }
                 }
                 if(forGuard == 1) {
@@ -157,11 +211,6 @@ void Engine::game() {
                 it->update();
                 window->draw(*it);
             }
-        }
-
-        if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
-            window->close();
-            return;
         }
 
         if(event.type == sf::Event::KeyPressed) {
@@ -195,5 +244,4 @@ void Engine::game() {
 
         window->display();
     }
-
 }
