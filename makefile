@@ -10,6 +10,7 @@ OBJ =\
 	Shot.o \
 	SpaceShip.o \
 	Health.o \
+	Lose.o \
 	main.o
 
 all: main
