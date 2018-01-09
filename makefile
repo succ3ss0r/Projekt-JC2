@@ -11,6 +11,7 @@ OBJ =\
 	SpaceShip.o \
 	Health.o \
 	Lose.o \
+	Highscore.o \
 	main.o
 
 all: main
