@@ -11,9 +11,9 @@ public:
     void increment(int pluss);
     void decrement(int minuss);
     sf::Text playerHealth;
+    int o_health;
 private:
     std::ostringstream ssHealth;
-    int health = 1000;
     sf::Font openSans;
 };
 

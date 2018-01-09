@@ -10,9 +10,9 @@ public:
     void update();
     void increment(int pluss);
     sf::Text playerScore;
+    int score = 0;
 private:
     std::ostringstream ssScore;
-    int score = 0;
     sf::Font openSans;
 };
 

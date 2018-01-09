@@ -7,6 +7,7 @@
 #include "Menu.hpp"
 #include "Shot.hpp"
 #include "Health.hpp"
+#include "Lose.hpp"
 
 class Engine {
 public:
@@ -14,20 +15,20 @@ public:
     Engine() = delete;
     ~Engine();
 
-    short option = -1; // zmienna wykorzystywana w metodzie gameMenu() do okreœlenia wyboru gracza
+    short option = -1; // zmienna wykorzystywana w metodzie gameMenu() oraz lose() do okreœlenia wyboru gracza
 
     void game(); // g³ówna pêtla gry
     void gameMenu(); // pêtla menu
+    void lose();
 private:
     unsigned int w_Width, w_Height;
     sf::RenderWindow *window;
     std::vector<Background> background;
     SpaceShip *battleShip;
-    std::vector<Enemy> enemies;
-    std::vector<Shot> shot;
     sf::Event event;
     Score *score;
     Menu *oMenu;
+    Lose *oLose;
     Health *health;
 };
 

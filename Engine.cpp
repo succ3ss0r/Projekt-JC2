@@ -1,7 +1,6 @@
 #include "cstdlib"
 #include "vector"
 #include "Engine.hpp"
-#include "iostream"
 
 Engine::Engine(unsigned int w_Width, unsigned int w_Height, std::string title) {
     window = new sf::RenderWindow( sf::VideoMode(w_Width, w_Height), title); //  Tworzenie okna
@@ -10,6 +9,7 @@ Engine::Engine(unsigned int w_Width, unsigned int w_Height, std::string title) {
     this->w_Height = w_Height;
 
     oMenu = new Menu(window->getSize().x, window->getSize().y); // utworzenie obiektu klasy Menu
+    oLose = new Lose(window->getSize().x, window->getSize().y);
 
     score = new Score(10.f, 30.f); // utworzenie obiektu klasy Score
     health = new Health(200.f, 10.f, 30.f);
@@ -55,11 +55,64 @@ void Engine::gameMenu() {
         window->display();
     }
 }
+void Engine::lose() {
+    oLose->playLoseMusic(); // metoda odpowiedzialna za odtwarzanie dzwieku
+    while(this->option == -2) {
+        while(window->pollEvent(event)) {
+            if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
+                window->close();
+                return;
+            }
+
+            if(event.type == sf::Event::KeyReleased) {
+                if(event.key.code == sf::Keyboard::Up)
+                    oLose->moveUp();
+                if(event.key.code == sf::Keyboard::Down)
+                    oLose->moveDown();
+                if(event.key.code == sf::Keyboard::Return) {
+                    this->option = oLose->getPressedItem();
+                    health->o_health = 10;
+                    score->score = 0;
+                    if(this->option == 1)
+                        this->option = -1;
+                    if(this->option == 2) {
+                        window->close();
+                        this->option = 2;
+                        return;
+                    }
+                    break;
+                }
+            }
+        }
+
+        window->clear();
+        oLose->drawLoseOption(*window);
+        window->draw(*oLose);
+        window->display();
+    }
+}
 void Engine::game() {
-    unsigned int enemyNum = 5, enemyWidth = 40, enemyHeight = 40, movementType = 1, createdEnemies = 0, destroyedEnemies = 0, forGuard = 0;  //  Zmienne wykorzystywane podczas tworzenia wrogich jednostek
-    while(true) {
+    std::vector<Enemy> enemies;
+    std::vector<Shot> shot;
+    shot.emplace_back(Shot(4.f, 10.f));
+    unsigned int enemyNum = 8, enemyWidth = 40, enemyHeight = 40, movementType = 1, createdEnemies = 0, destroyedEnemies = 0, forGuard = 0;  //  Zmienne wykorzystywane podczas tworzenia wrogich jednostek
+    // forGuard to zmienna ktora jest potrzebna do wyjscia z zagniezdzonych petli for
+    while(this->option == 0) {
         window->clear(sf::Color::Black);  //  czyszczenie okna kolor czarny
         window->pollEvent(event);  //  przechwytywanie zdarzen
+
+        for(unsigned int i = 0; i < background.size(); ++i) {  //  aktualizacja tla
+            background[i].update();
+            if(background[i].getPosition().y > w_Height)
+                background[i].setPosition(rand()%w_Width, 0);
+
+            window->draw(background[i]);
+        }
+
+        if(health->o_health <= 0) {
+            this->option = -2;
+            break;
+        }
 
         if(enemies.size() != 0) {
             for(std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end(); ++it) {
@@ -85,12 +138,13 @@ void Engine::game() {
                 }
             }
 
-        if(enemies.size() != 0)
+        if(enemies.size() != 0 && shot.size() != 0) {
             for(std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end(); ++it) {  //  aktualizacja wrogich jednostek
-                for(std::vector<Shot>::iterator sit = shot.begin(); sit != shot.end(); ++sit) {
-                    if(sit->getPosition().y - 5 >= it->getPosition().y - 20 && sit->getPosition().y - 5 <= it->getPosition().y + 20 && sit->getPosition().x - 2 >= it->getPosition().x - 20 && sit->getPosition().x + 2 <= it->getPosition().x +20) {
+                for(std::vector<Shot>::iterator it2 = shot.begin(); it2 != shot.end(); ++it2) {
+                    if(it2->getPosition().y - 5 >= it->getPosition().y - 20 && it2->getPosition().y - 5 <= it->getPosition().y + 20 && it2->getPosition().x - 2 >= it->getPosition().x - 20 && it2->getPosition().x + 2 <= it->getPosition().x +20) {
                         score->increment(10);
                         enemies.erase(it);
+                        it2->setPosition(-10,-10);
                         destroyedEnemies++;
                         forGuard = 1;
                         break;
@@ -103,6 +157,7 @@ void Engine::game() {
                 it->update();
                 window->draw(*it);
             }
+        }
 
         if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
             window->close();
@@ -112,26 +167,17 @@ void Engine::game() {
         if(event.type == sf::Event::KeyPressed) {
             if(event.key.code == sf::Keyboard::Space) {
                 if(shot.size() != 0)
-                    if(shot[shot.size() - 1].getPosition().y >= 400)
-                        continue;
-
-                shot.push_back(Shot(4.f, 10.f));
-                if(shot.size() > 0)
-                    shot[shot.size() - 1].setPosition(battleShip->getPosition().x, battleShip->getPosition().y);
+                    if(shot[shot.size() - 1].getPosition().y <= 350) {
+                        shot.emplace_back(4.f, 10.f);
+                        if(shot.size() > 0)
+                            shot[shot.size() - 1].setPosition(battleShip->getPosition().x, battleShip->getPosition().y);
+                    }
             }
         }
 
         for(unsigned short i = 0; i < shot.size(); ++i) {
             shot[i].update();
             window->draw(shot[i]);
-        }
-
-        for(unsigned int i = 0; i < background.size(); ++i) {  //  aktualizacja tla
-            background[i].update();
-            if(background[i].getPosition().y > w_Height)
-                background[i].setPosition(rand()%w_Width, 0);
-
-            window->draw(background[i]);
         }
 
         battleShip->update();  //  aktualizacja oraz rysowanie statku gracza
@@ -149,5 +195,5 @@ void Engine::game() {
 
         window->display();
     }
-}
 
+}
