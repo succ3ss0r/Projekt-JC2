@@ -1,5 +1,4 @@
 #include "SFML/Graphics.hpp"
-#include "SFML/Audio.hpp"
 #include "sstream"
 
 class Highscore : public sf::Drawable {
@@ -23,5 +22,3 @@ private:
     sf::RectangleShape shape;
     sf::Texture texture;
 };
-
-

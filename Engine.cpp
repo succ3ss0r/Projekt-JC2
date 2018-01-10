@@ -12,6 +12,7 @@ Engine::Engine(unsigned int w_Width, unsigned int w_Height, std::string title) {
     oMenu->playMenuMusic(); // metoda odpowiedzialna za odtwarzanie dzwieku
     oLose = new Lose(window->getSize().x, window->getSize().y);
     oHighscore = new Highscore(window->getSize().x, window->getSize().y);
+    oNick = new GetNickname(window->getSize().x, window->getSize().y);
 
     score = new Score(10.f, 30.f); // utworzenie obiektu klasy Score
     health = new Health(200.f, 10.f, 30.f);
@@ -29,10 +30,46 @@ Engine::~Engine() {
     delete oLose;
     delete oMenu;
     delete oHighscore;
+    delete oNick;
     delete window;
 }
+void Engine::getNickname() {
+    while(this->option == 1 && window->isOpen()) {
+        oNick->unicode = 0;
+        while(window->pollEvent(event)) {
+             if(event.type == sf::Event::Closed) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
+                window->close();
+                return;
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                this->option = -1;
+                return;
+            }
+            if(event.type == sf::Event::TextEntered) {
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
+                    oNick->name += static_cast<char>(oNick->unicode);
+                    oNick->name.erase(oNick->name.size()-1, 1);
+					oNick->text[3].setString(oNick->name);
+                }
+
+                if((event.text.unicode < 58 && event.text.unicode > 47) || (event.text.unicode < 91 && event.text.unicode > 61) || (event.text.unicode < 123 && event.text.unicode > 96))
+                    oNick->unicode = event.text.unicode;
+            }
+        }
+        if(oNick->unicode) {
+            oNick->str = oNick->text[3].getString();
+            oNick->str += oNick->unicode;
+            oNick->text[3].setString(oNick->str);
+        }
+        window->clear();
+        oNick->update(*window);
+        window->draw(*oNick);
+        oNick->printText();
+        window->display();
+    }
+}
 void Engine::gameMenu() {
-    while(this->option == -1) {
+    while(this->option == -1 && window->isOpen()) {
         while(window->pollEvent(event)) {
             if(event.type == sf::Event::Closed) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
                 oMenu->stopMenuMusic();
@@ -56,7 +93,7 @@ void Engine::gameMenu() {
                 }
             }
         }
-
+        oNick->printText();
         window->clear();
         oMenu->drawMenuList(*window);
         window->draw(*oMenu);
@@ -69,18 +106,14 @@ void Engine::leaderBoard() {
     oHighscore->printLeaderBoard(*window);
     window->draw(*oHighscore);
     window->display();
-    while(this->option == -3) {
+    while(this->option == -3 && window->isOpen()) {
         while(window->pollEvent(event)) {
             if(event.type == sf::Event::Closed) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
                 window->close();
                 return;
             }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                this->option = -1;
-                return;
-            }
             if(event.type == sf::Event::KeyReleased) {
-                if(event.key.code == sf::Keyboard::Return || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                if(event.key.code == sf::Keyboard::Space) {
                     this->option = -1;
                     return;
                 }
@@ -90,7 +123,7 @@ void Engine::leaderBoard() {
 }
 void Engine::lose() {
     oLose->playLoseMusic(); // metoda odpowiedzialna za odtwarzanie dzwieku
-    while(this->option == -2) {
+    while(this->option == -2 && window->isOpen()) {
         while(window->pollEvent(event)) {
             if(event.type == sf::Event::Closed) {  //  Sprawdzanie czy nie nastapilo zamkniecie okna przez 'X' lub Esc
                 window->close();
@@ -137,7 +170,7 @@ void Engine::game() {
     shot[0].setPosition(-100, -100);
     unsigned int enemyNum = 8, enemyWidth = 40, enemyHeight = 40, movementType = 1, createdEnemies = 0, destroyedEnemies = 0, forGuard = 0;  //  Zmienne wykorzystywane podczas tworzenia wrogich jednostek
     // forGuard to zmienna ktora jest potrzebna do wyjscia z zagniezdzonych petli for
-    while(this->option == 0) {
+    while(this->option == 0 && window->isOpen()) {
         window->clear(sf::Color::Black);  //  czyszczenie okna kolor czarny
         window->pollEvent(event);  //  przechwytywanie zdarzen
 
@@ -168,7 +201,6 @@ void Engine::game() {
 
         if(enemies.size() != 0) {
             for(std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end(); ++it) {
-                it->setTexture();
                 if(it->getPosition().x > 830) {
                     health->decrement(10);
                     enemies.erase(it);
@@ -192,6 +224,7 @@ void Engine::game() {
 
         if(enemies.size() != 0) {
             for(std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end(); ++it) {  //  aktualizacja wrogich jednostek
+                it->setTexture();
                 if(shot.size() != 0) {
                     for(std::vector<Shot>::iterator it2 = shot.begin(); it2 != shot.end(); ++it2) {
                         if(it2->getPosition().y - 5 >= it->getPosition().y - 20 && it2->getPosition().y - 5 <= it->getPosition().y + 20 && it2->getPosition().x - 2 >= it->getPosition().x - 20 && it2->getPosition().x + 2 <= it->getPosition().x +20) {
@@ -214,14 +247,13 @@ void Engine::game() {
         }
 
         if(event.type == sf::Event::KeyPressed) {
-            if(event.key.code == sf::Keyboard::Space) {
+            if(event.key.code == sf::Keyboard::Space)
                 if(shot.size() != 0)
                     if(shot[shot.size() - 1].getPosition().y <= 350) {
                         shot.emplace_back(4.f, 10.f);
                         if(shot.size() > 0)
                             shot[shot.size() - 1].setPosition(battleShip->getPosition().x, battleShip->getPosition().y);
                     }
-            }
         }
 
         for(unsigned short i = 0; i < shot.size(); ++i) {

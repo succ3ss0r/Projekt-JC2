@@ -12,6 +12,7 @@ OBJ =\
 	Health.o \
 	Lose.o \
 	Highscore.o \
+	GetNickname.o \
 	main.o
 
 all: main

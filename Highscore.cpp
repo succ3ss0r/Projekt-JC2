@@ -40,7 +40,7 @@ void Highscore::printHighscores() {
     this->playerScore[3].setString(this->ssScore[3].str());
 
     this->ssScore[4].str("");
-    this->ssScore[4] << "Pres enter or escape to go back to menu";
+    this->ssScore[4] << "Pres space to go back to menu";
     this->playerScore[4].setString(this->ssScore[4].str());
 }
 void Highscore::printLeaderBoard(sf::RenderWindow& window) {

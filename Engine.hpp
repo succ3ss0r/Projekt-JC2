@@ -9,6 +9,7 @@
 #include "Health.hpp"
 #include "Lose.hpp"
 #include "Highscore.hpp"
+#include "GetNickname.hpp"
 
 class Engine {
 public:
@@ -22,9 +23,10 @@ public:
     void gameMenu(); // pêtla menu
     void lose();
     void leaderBoard();
+    void getNickname();
+    sf::RenderWindow *window;
 private:
     unsigned int w_Width, w_Height;
-    sf::RenderWindow *window;
     std::vector<Background> background;
     SpaceShip *battleShip;
     sf::Event event;
@@ -33,6 +35,7 @@ private:
     Lose *oLose;
     Health *health;
     Highscore *oHighscore;
+    GetNickname *oNick;
 };
 
 
