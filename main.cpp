@@ -1,10 +1,3 @@
-/*********************************************
-********* Serwicki Jakub, Siwoñ Pawe³ ********
-***** PROJEKT Z PODSTAW PROGRAMOWANIA C2 *****
-*************** SPACE INVADERS ***************
-******* POLITECHNIKA ŚWIĘTOKRZYSKA 2017 ******
-*********************************************/
-
 #include "Engine.hpp"
 // option to zmienna w klasie Engine odpowiedzialna za wskazanie wyboru usera w menu
 

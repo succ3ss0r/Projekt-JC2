@@ -4,7 +4,7 @@
 #include "vector"
 #include "fstream"
 #include "Engine.hpp"
-/
+
 Engine::Engine(unsigned int w_Width, unsigned int w_Height, std::string title) {
     window = new sf::RenderWindow( sf::VideoMode(w_Width, w_Height), title); //  Tworzenie okna
     window->setFramerateLimit(60); // zmiana limitu klatek
