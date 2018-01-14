@@ -11,9 +11,11 @@ SpaceShip::SpaceShip(float w_Width, float w_Height, float o_Width, float o_Heigh
     shape.setSize(sf::Vector2f{this->spaceShipWidth, this->spaceShipHeight});
     shape.setOrigin(spaceShipWidth/2.f, spaceShipHeight/2.f);
 }
+
 void SpaceShip::draw(sf::RenderTarget& target, sf::RenderStates state) const {
     target.draw(this->shape, state);
 }
+
 void SpaceShip::update() {
     this->shape.move(this->velocity);
 
@@ -25,12 +27,15 @@ void SpaceShip::update() {
         velocity.x = 0;
     }
 }
+
 sf::Vector2f SpaceShip::getPosition() {
     return shape.getPosition();
 }
+
 float SpaceShip::left() {
     return this->shape.getPosition().x - shape.getSize().x / 2.f;
 }
+
 float SpaceShip::right() {
     return this->shape.getPosition().x + shape.getSize().x / 2.f;
 }

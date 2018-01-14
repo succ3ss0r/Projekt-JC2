@@ -2,19 +2,19 @@
 
 class Shot : public sf::Drawable {
 public:
-    Shot(float o_Width, float o_Height);
-    Shot() = delete;
-    ~Shot() = default;
+    Shot(float o_Width, float o_Height); // konstruktor
+    Shot() = delete; /*!< usuwa domyslny konstruktor*/
+    ~Shot() = default; /*!< ustawia domyslny destruktor*/
 
-    void update();
-    sf::Vector2f getPosition();
-    void setPosition(float n_Width, float n_Height);
+    void setVelocity(); // zmienia predkosc ruchu
+    sf::Vector2f getPosition(); // ustala pozycje obiektu
+    void setPosition(float o_Width, float o_Height); // zmienia pozycje ksztaltu
 private:
-    float shotWidth, shotHeight;
-    sf::RectangleShape shotShape;
-    sf::Texture texture;
-    const float shotVelocity = -10.0f;
-    sf::Vector2f velocity{ 0, shotVelocity };
-    void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
+    float shotWidth, shotHeight; // przechowuja szerokosc oraz wysokosc ksztaltu
+    sf::RectangleShape shotShape; // ksztalt prostokata
+    sf::Texture texture; // zmienna do przechowywania tekstury
+    const float shotVelocity = -10.0f; // zmienna wykorzystywana do ustalenia zmiany predkosci
+    sf::Vector2f velocity{ 0, shotVelocity }; // taka predkosc ma pocisk
+    void draw(sf::RenderTarget& target, sf::RenderStates state) const override; // Metoda jest odziedziczona z sf::Drawable umozliwia rysowanie ksztaltow w oknie
 };
 

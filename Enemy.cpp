@@ -5,24 +5,28 @@ Enemy::Enemy(float w_Width, float w_Height, float o_Width, float o_Height, short
     shape.setSize(sf::Vector2f{o_Width, o_Height});
     shape.setOrigin(o_Width/2.f, o_Height/2.f);
 }
+
 void Enemy::update() {
     this->shape.move(this->velocity);
 
     if(this->shape.getPosition().x < 820) {
         velocity.x = enemyShipVelocity;
-        shape.setPosition(chart(this->shape.getPosition().x, this->type));
+        shape.setPosition(setPath(this->shape.getPosition().x, this->type));
     }
 }
+
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates state) const {
     target.draw(this->shape, state);
 }
+
 sf::Vector2f Enemy::getPosition() {
     return shape.getPosition();
 }
+
 sf::Vector2f Enemy::getSize() {
     return shape.getSize();
 }
-sf::Vector2f Enemy::chart(float pos_X, short type) {
+sf::Vector2f Enemy::setPath(float pos_X, short type) {
     float pos_Y = pos_X;
     sf::Vector2f v = {pos_X, pos_Y};
     if(type == 1) {
@@ -56,6 +60,7 @@ sf::Vector2f Enemy::chart(float pos_X, short type) {
 
     return v;
 }
+
 void Enemy::setTexture() {
     texture.loadFromFile("images/kosmita.png");
     shape.setTexture(&texture);

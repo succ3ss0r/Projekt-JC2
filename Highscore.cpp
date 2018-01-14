@@ -28,10 +28,10 @@ Highscore::Highscore(float w_Width, float w_Height) {
     this->playerScore[3].setFillColor(sf::Color::Red);
 }
 
-void Highscore::printHighscores() {
+void Highscore::setHighscoreText() {
     for(int j = 0; j < 3; ++j) {
         this->ssScore[j].str("");
-        this->ssScore[j] << "Name: " << this->name[j] << "Score: " << this->score[j];
+        this->ssScore[j] << "Name: " << this->name[j] << " Score: " << this->score[j];
         this->playerScore[j].setString(this->ssScore[j].str());
     }
 
@@ -43,10 +43,12 @@ void Highscore::printHighscores() {
     this->ssScore[4] << "Pres space to go back to menu";
     this->playerScore[4].setString(this->ssScore[4].str());
 }
+
 void Highscore::printLeaderBoard(sf::RenderWindow& window) {
     for(int i = 0; i < 5; ++i)
         window.draw(playerScore[i]);
 }
+
 void Highscore::draw(sf::RenderTarget& target, sf::RenderStates state) const {
     target.draw(this->shape, state);
 }

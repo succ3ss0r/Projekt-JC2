@@ -6,11 +6,13 @@ Score::Score(float o_Position, float o_Size) {
         this->playerScore.setCharacterSize(o_Size);
         this->playerScore.setPosition({o_Position, o_Position});
 }
-void Score::update() {
+
+void Score::textUpdate() {
     this->ssScore.str("");
     this->ssScore << "Score: " << this->score;
     this->playerScore.setString(this->ssScore.str());
 }
+
 void Score::increment(int pluss) {
     this->score += pluss;
 }

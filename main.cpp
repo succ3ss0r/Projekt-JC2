@@ -7,6 +7,7 @@
 
 #include "Engine.hpp"
 // option to zmienna w klasie Engine odpowiedzialna za wskazanie wyboru usera w menu
+
 int main()
 {
     Engine engine(800, 600, "Space Invaders by Serwicki & Siwon BETA"); // utworzenie obiektu silnika gry
@@ -24,5 +25,9 @@ int main()
             engine.getNickname();
         if(engine.option == 2)
             return 0;
+        if(engine.option == -10)
+            return -1;
     }
+
+    return 0;
 }

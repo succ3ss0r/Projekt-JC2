@@ -8,15 +8,19 @@ Shot::Shot(float o_Width, float o_Height) {
     shotShape.setTexture(&texture);
     shotShape.setOrigin(shotWidth / 2, shotHeight / 2);
 }
+
 void Shot::draw(sf::RenderTarget& target, sf::RenderStates state) const {
     target.draw(this->shotShape, state);
 }
-void Shot::update() {
+
+void Shot::setVelocity() {
     shotShape.move(this->velocity);
 }
+
 sf::Vector2f Shot::getPosition() {
     return shotShape.getPosition();
 }
-void Shot::setPosition(float n_Width, float n_Height) {
-    return shotShape.setPosition(n_Width, n_Height);
+
+void Shot::setPosition(float o_Width, float o_Height) {
+    return shotShape.setPosition(o_Width, o_Height);
 }

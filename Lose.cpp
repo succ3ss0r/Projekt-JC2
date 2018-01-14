@@ -1,11 +1,10 @@
 #include "Lose.hpp"
 
 Lose::Lose(float w_Width, float w_Height) {
-    openSans.loadFromFile("OpenSans-Regular.ttf");  // za³adowanie czcionki
+    openSans.loadFromFile("OpenSans-Regular.ttf");  // za3adowanie czcionki
 
     soundBuf.loadFromFile("music/lose.ogg"); // zaladowanie sciezki dzwiekowej
     sound.setBuffer(soundBuf); // zbuforowanie sciezki dzwiekowej
-    //sound.setLoop(true); // zmien odtwarzanie dzwieku w petli na true
 
     texture.loadFromFile("images/lose.png"); // zaladuj texture kosmity
     shape.setTexture(&texture, true); // zmien texture
@@ -14,7 +13,7 @@ Lose::Lose(float w_Width, float w_Height) {
 
     // Lose[0] to 3 elementowa tablica typu sf::Text
     lose[0].setFont(openSans); // ustaw czcionke
-    lose[0].setString("Play again"); // zmieñ ci¹g znaków
+    lose[0].setString("Play again"); // zmien ci1g znaków
     // zmienna tablicowa color oznacza kolor 0 to White, 1 to Red
     lose[0].setFillColor(color[1]); // ustaw wypelnienie koloru Red
     lose[0].setPosition(sf::Vector2f{100, w_Height / (3 + 1) * 1}); // zmien pozycje wyswietlanego tekstu
@@ -31,11 +30,12 @@ Lose::Lose(float w_Width, float w_Height) {
 
     selectedItem = 0; // opcja na ktorej obecnie jest wskaznik
 }
+
 void Lose::drawLoseOption(sf::RenderWindow& window) {
-    window.draw(loseText);
     for(int i = 0; i < 3; ++i)
         window.draw(lose[i]);
 }
+
 void Lose::moveUp() {
     if(selectedItem - 1 >= 0) {
         lose[selectedItem].setFillColor(color[0]); // ustaw kolor na White
@@ -43,6 +43,7 @@ void Lose::moveUp() {
         lose[selectedItem].setFillColor(color[1]); // ustaw kolor na Red
     }
 }
+
 void Lose::moveDown() {
     if(selectedItem + 1 < 3) {
         lose[selectedItem].setFillColor(color[0]);
@@ -50,12 +51,19 @@ void Lose::moveDown() {
         lose[selectedItem].setFillColor(color[1]);
     }
 }
+
 void Lose::draw(sf::RenderTarget& target, sf::RenderStates state) const {
     target.draw(this->shape, state);
 }
+
+short Lose::getPressedItem() {
+    return selectedItem;
+}
+
 void Lose::playLoseMusic() {
     sound.play(); // odtwarzaj muzyke
 }
+
 void Lose::stopLoseMusic() {
     sound.stop(); // przestan odtwarzac muzyke
 }
